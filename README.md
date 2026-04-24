@@ -1,188 +1,186 @@
 # 🤖 AiTextra — Turn Your Phone Number into an AI Chatbot
 
-> **What if your phone number itself could think, reply, and assist like ChatGPT — using just SMS?**
+> **Convert your own mobile number into an AI assistant that replies via SMS.**
 
-AiTextra transforms a normal mobile number into a fully functional AI chatbot.
-Anyone can send an SMS to your number and receive intelligent AI responses — without needing internet, apps, or smartphones.
+AiTextra is a system that allows your phone number to behave like an AI chatbot.
+Anyone can send an SMS to your number, and your phone will automatically reply using AI.
 
 <img width="540" height="1080" alt="image" src="https://github.com/user-attachments/assets/e48541ce-e675-461b-94d2-45d89594adb6" />
 
-
 ---
 
-# 🌍 The Big Idea
+# 🌍 What This Project Actually Does
 
-Most AI tools today are limited to:
+This project does **NOT give you a shared AI service**.
 
-* Smartphones
-* Internet access
-* Apps or browsers
-
-But billions of people still rely on **basic phones and SMS**.
-
-👉 AiTextra solves this by bringing AI to the **most universal communication layer: SMS**
-
----
-
-# 🔥 What This Project Does
+👉 Instead, it helps you build:
 
 ```text
-Your Phone Number = AI Assistant
+YOUR PHONE NUMBER = YOUR PERSONAL AI BOT
 ```
 
-* A user sends an SMS
-* Your system processes it using AI
-* A reply is sent back instantly
+* Your phone receives SMS
+* Your backend processes it using AI
+* Your phone sends back the reply
 
 ---
 
-# 🧠 How It Works (Concept)
+# ⚠️ IMPORTANT (READ BEFORE STARTING)
+
+This is a **self-hosted system**.
+
+👉 You MUST:
+
+* Clone this repository
+* Run your own backend
+* Use your own API keys
+* Connect your own phone
+
+---
+
+# 🧠 System Overview
 
 ```text
-User (Any Phone)
-   ↓ SMS
+User sends SMS
+   ↓
 Your Phone (SimAPI App)
    ↓
-Cloud Backend (AI Processing)
+Webhook → Your Backend
    ↓
-SimAPI Gateway
+AI (Gemini)
    ↓
-Your Phone (sends reply)
-   ↓ SMS
-User receives AI response
+SimAPI
+   ↓
+Your Phone sends reply
 ```
 
 ---
 
-# ⚙️ Architecture Breakdown
+# 📦 Project Structure
 
-### 📱 1. Your Phone
+```text
+AiTextra/
+│
+├── backend/        ← 🔥 THIS IS THE MAIN PART
+│   ├── index.js
+│   ├── aiService.js
+│   ├── smsService.js
+│   ├── memoryService.js
+│   └── package.json
+│
+└── mobile-app/     ← Android APK (SimAPI)
+```
 
-* Receives SMS
-* Sends data to backend
-* Sends AI reply back
-
----
-
-### 🌐 2. Backend Server
-
-* Receives incoming messages
-* Sends them to AI (Gemini)
-* Returns response
-
----
-
-### 📡 3. SimAPI
-
-* Acts as a bridge between backend and phone
-* Enables sending SMS programmatically
+👉 Everything important is inside the **`backend/` folder**
 
 ---
 
-### 🤖 4. AI Model
-
-* Generates short, intelligent responses
-* Optimized for SMS (concise replies)
+# 🚀 Step-by-Step Setup
 
 ---
 
-# 🚀 What Makes This Powerful
+## 📥 STEP 1 — Clone the Repository
 
-* 📩 Works on **any phone (even keypad phones)**
-* 🌐 No internet required for user
-* 💰 Zero cost messaging system (your SIM)
-* ⚡ Real-world deployable system
-* 🌍 Scalable to rural / offline areas
-
----
-
-# 📱 Complete Setup Guide
-
-Follow this carefully — do NOT skip steps.
+```bash
+git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
+cd YOUR_REPO/backend
+```
 
 ---
 
-## 📥 STEP 1 — Download Android App
+## 📦 STEP 2 — Install Dependencies
+
+```bash
+npm install
+```
+
+---
+
+## 🔐 STEP 3 — Create Your `.env` File
+
+Inside the `backend/` folder, create a `.env` file:
+
+```env
+GEMINI_API_KEY=your_gemini_api_key
+SIMAPI_KEY=your_simapi_key
+PORT=3000
+```
+
+---
+
+### 🔑 Where to get keys?
+
+* Gemini API → Google AI Studio
+* SimAPI Key → SimAPI Dashboard
+
+---
+
+## ▶️ STEP 4 — Run Backend
+
+```bash
+node index.js
+```
+
+---
+
+### Expected output:
+
+```text
+Server running on http://localhost:3000
+```
+
+---
+
+## 🌐 STEP 5 — Expose Backend (for testing)
+
+Use ngrok:
+
+```bash
+ngrok http 3000
+```
+
+Copy URL like:
+
+```text
+https://xxxxx.ngrok-free.dev
+```
+
+---
+
+## 📱 STEP 6 — Install SimAPI App
 
 👉 Download APK:
 
 ```text
-[SimAPI](https://bit.ly/4eFsI6c)
+https://github.com/YOUR_USERNAME/YOUR_REPO/releases/download/v1.0/simapi.apk
 ```
 
 ---
 
-## 📲 STEP 2 — Install App
+## 🔐 STEP 7 — Give Permissions
 
-1. Open APK
-2. Enable “Install Unknown Apps”
-3. Turn off the play protect from the google play store settings
-4. Install
-
----
-
-## 🔐 STEP 3 — Grant Permissions
-
-Allow ALL:
+Allow:
 
 * Send SMS
 * Read Phone State
-* Receive SMS
 * Internet
+* Background activity
 
 ---
 
-## 🔋 STEP 4 — Disable Battery Restrictions
-
-Go to:
-
-Settings → Apps → SimAPI → Battery
-
-Set:
-
-* Unrestricted
-* Allow background activity
-
-👉 This is CRITICAL
-
----
-
-## 🌐 STEP 5 — Open Dashboard
+## 🔋 STEP 8 — Disable Battery Optimization (VERY IMPORTANT)
 
 ```text
-https://sim-api-one.vercel.app
+Settings → Apps → SimAPI → Battery → Unrestricted
 ```
 
 ---
 
-## 🔑 STEP 6 — Get API Key
-
-Copy:
-
-```text
-sim_live_xxxxxxxxxxxxxx
-```
-
-## 🔐 Important: How API Key Works
-
-This project is designed to convert **your own phone number into an AI chatbot**.
-
-The API key is used to connect your phone (via the SimAPI app) to the backend system.
-
-⚠️ Note:
-- The backend uses a fixed API key.
-- Only the connected device will send SMS replies.
-- This is a single-device AI bot system.
-
-If you want multi-user support, the backend must be modified to accept dynamic API keys
-
----
-
-## 📲 STEP 7 — Connect Phone
+## 🔑 STEP 9 — Connect Your Phone
 
 1. Open SimAPI app
-2. Paste API key
-3. Tap Connect
+2. Paste your API key
+3. Click Connect
 
 ---
 
@@ -194,27 +192,21 @@ Device Status: Online
 
 ---
 
-## 🌐 STEP 8 — Backend
+## 📡 STEP 10 — Setup SMS Forwarding
 
-Your backend:
+Configure your SMS forwarder:
+
+---
+
+### Webhook URL:
 
 ```text
-https://aitextra.onrender.com
+https://xxxxx.ngrok-free.dev/webhook
 ```
 
 ---
 
-## 📡 STEP 9 — Configure SMS Forwarder
-
-### Webhook:
-
-```text
-https://aitextra.onrender.com/webhook
-```
-
----
-
-### Payload:
+### JSON Payload:
 
 ```json
 {
@@ -235,9 +227,9 @@ https://aitextra.onrender.com/webhook
 
 ---
 
-## 🧪 STEP 10 — Test
+## 🧪 STEP 11 — Test
 
-Send SMS:
+Send SMS to your phone:
 
 ```text
 Hello AI
@@ -245,7 +237,7 @@ Hello AI
 
 ---
 
-### 🎉 Expected:
+### 🎉 Expected Reply:
 
 ```text
 Hello! How can I assist you today?
@@ -253,57 +245,79 @@ Hello! How can I assist you today?
 
 ---
 
-# 🚨 Common Issues & Fixes
+# 🚀 Deployment (Optional)
+
+You can deploy backend on:
+
+* Render
+* Railway
+
+After deployment:
+
+```text
+https://your-app.onrender.com/webhook
+```
+
+Replace ngrok URL in SMS forwarder.
 
 ---
 
-## ❌ No reply
+# 🔐 How API Key Works
+
+The API key connects:
+
+```text
+Your Phone ↔ Your SimAPI Backend
+```
+
+👉 Important:
+
+* The backend uses YOUR API key
+* Only YOUR phone will send SMS
+* This is a **single-device AI bot**
+
+---
+
+# ⚠️ Common Mistakes
+
+---
+
+## ❌ Expecting it to work without cloning
+
+This will NOT work.
+
+👉 You must run your own backend.
+
+---
+
+## ❌ Wrong API key
+
+Make sure:
+
+```text
+Same API key in:
+- .env
+- SimAPI app
+```
+
+---
+
+## ❌ No SMS received
 
 Check:
 
-* Device is ONLINE
-* Internet ON
+* Device online
 * Permissions granted
+* Battery unrestricted
 
 ---
 
-## ❌ "Dispatched but no SMS"
-
-Meaning:
-
-```text
-Backend OK → Phone not sending
-```
-
-Fix:
-
-* Reconnect device
-* Restart app
-* Check SMS permission
-
----
-
-## ❌ Works once then stops
+## ❌ Slow response
 
 Cause:
 
-```text
-Android killed background app
-```
-
-Fix:
-
-* Disable battery optimization
-* Keep app open
-
----
-
-## ❌ Slow responses
-
-Cause:
-
-* Free hosting cold start
-* AI latency
+* ngrok delay
+* free hosting cold start
 
 ---
 
@@ -312,31 +326,19 @@ Cause:
 After setup:
 
 ```text
-Your phone becomes an AI chatbot
+Your phone number becomes an AI chatbot
 ```
 
-Anyone can:
-
-* Send SMS
-* Get AI response instantly
+Anyone can message your number → AI replies.
 
 ---
 
-# 💡 Real-World Use Cases
+# 💡 Use Cases
 
-* Rural AI assistant
-* Agriculture help
-* Healthcare guidance
-* Emergency systems
-* Offline AI education
-
----
-
-# 🏁 Status
-
-✅ Fully working system
-🚀 Deployed and functional
-⚡ Ready for scaling
+* Personal AI assistant
+* Rural AI access
+* Offline chatbot
+* Emergency response systems
 
 ---
 
@@ -348,4 +350,4 @@ Abeer Pathela
 
 # ⭐ Support
 
-If you found this project useful, give it a ⭐
+If this project helped you, give it a ⭐
